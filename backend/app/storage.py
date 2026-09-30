@@ -32,6 +32,13 @@ def backend() -> str:
     return "local"
 
 
+def backend_or_none() -> str | None:
+    try:
+        return backend()
+    except RuntimeError:
+        return None
+
+
 def save(path: str, content: bytes, content_type: str) -> str:
     """Store a file and return the reference saved in the database."""
     if backend() == "blob":

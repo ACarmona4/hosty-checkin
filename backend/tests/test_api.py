@@ -31,6 +31,7 @@ def client(tmp_path, monkeypatch):
         conn.execute("DROP TABLE IF EXISTS document_scans, passport_scans, checkins, reservations")
     monkeypatch.setattr(db, "DATABASE_URL", url)
     monkeypatch.setattr(db, "UPLOADS_DIR", tmp_path / "up")
+    monkeypatch.setattr(main, "_db_ready", False)
     with TestClient(main.app) as c:
         yield c
 
@@ -190,3 +191,20 @@ def test_draft_and_submit(client):
     got = client.get("/api/checkin", headers=h).json()
     assert got["status"] == "submitted" and got["submitted_at"]
     assert client.put("/api/checkin", headers=h, json={}).status_code == 409
+
+
+def test_health_local(client):
+    assert client.get("/api/health").json() == {
+        "ok": True, "environment": "local", "missing": [], "database": "ok", "storage": "local"}
+
+
+def test_incomplete_vercel_config_returns_503(client, monkeypatch):
+    from app import storage
+    for v in ("BLOB_READ_WRITE_TOKEN", "VERCEL_BLOB_READ_WRITE_TOKEN", "PLATHOST_DATABASE_URL", "DATABASE_URL", "POSTGRES_URL"):
+        monkeypatch.delenv(v, raising=False)
+    monkeypatch.setattr(storage, "ON_VERCEL", True)
+    monkeypatch.setattr(main, "SECRET", main._DEV_SECRET.encode())
+    h = client.get("/api/health").json()
+    assert h["ok"] is False and h["missing"] == ["PLATHOST_SECRET", "DATABASE_URL", "BLOB_READ_WRITE_TOKEN"]
+    r = login(client)
+    assert r.status_code == 503 and "PLATHOST_SECRET" in r.json()["detail"]

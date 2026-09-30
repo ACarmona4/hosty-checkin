@@ -14,8 +14,9 @@ from contextlib import asynccontextmanager
 from datetime import date, datetime, timezone
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.concurrency import run_in_threadpool
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -27,20 +28,76 @@ from .db import connect, init_db
 
 _DEV_SECRET = "dev-secret-change-me"
 SECRET = os.environ.get("PLATHOST_SECRET", _DEV_SECRET).encode()
-if storage.ON_VERCEL and SECRET == _DEV_SECRET.encode():
-    raise RuntimeError("PLATHOST_SECRET no está configurado en Vercel.")
 ADMIN_KEY = os.environ.get("PLATHOST_ADMIN_KEY", "")
 TOKEN_TTL = 60 * 60 * 2  # 2 h
 MAX_IMAGE_BYTES = 4 * 1024 * 1024  # Vercel Functions reject request bodies > 4.5 MB
 RULES = json.loads((Path(__file__).parent / "rules.json").read_text(encoding="utf-8"))
 
+_db_ready = False
+_db_error: str | None = None
+
+
+def ensure_db() -> None:
+    """Create tables/seed once per instance; retried on the next request if the database was unreachable."""
+    global _db_ready, _db_error
+    if _db_ready:
+        return
+    try:
+        init_db()
+        _db_ready, _db_error = True, None
+    except Exception as e:  # noqa: BLE001 — reported via /api/health, details go to the logs
+        _db_error = type(e).__name__
+        print(f"[plathost] database init failed: {e!r}")
+
+
+def missing_config() -> list[str]:
+    """Deployment settings that are required on Vercel but not set (names only, never values)."""
+    if not storage.ON_VERCEL:
+        return []
+    missing = []
+    if SECRET == _DEV_SECRET.encode():
+        missing.append("PLATHOST_SECRET")
+    if not db.configured_url():
+        missing.append("DATABASE_URL")
+    if storage.backend_or_none() is None:
+        missing.append("BLOB_READ_WRITE_TOKEN")
+    return missing
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    init_db()
+    if not missing_config():
+        await run_in_threadpool(ensure_db)
     yield
 
 
 app = FastAPI(title="PlatHost API", lifespan=lifespan)
+
+
+@app.middleware("http")
+async def require_config(request: Request, call_next):
+    if request.url.path.startswith("/api/") and request.url.path != "/api/health":
+        missing = missing_config()
+        if missing:
+            return JSONResponse({"detail": f"Configuración incompleta en el servidor: falta {', '.join(missing)}."}, 503)
+        await run_in_threadpool(ensure_db)
+        if not _db_ready:
+            return JSONResponse({"detail": "No se pudo conectar a la base de datos."}, 503)
+    return await call_next(request)
+
+
+@app.get("/api/health")
+def health():
+    missing = missing_config()
+    if not missing:
+        ensure_db()
+    return {
+        "ok": not missing and _db_ready,
+        "environment": os.environ.get("VERCEL_ENV", "local"),
+        "missing": missing,
+        "database": "ok" if _db_ready else (_db_error or "not checked"),
+        "storage": storage.backend_or_none(),
+    }
 
 
 # ---------------------------------------------------------------- helpers

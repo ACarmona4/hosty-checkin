@@ -20,7 +20,8 @@ export default function Login({ onLoggedIn }) {
       setToken(token)
       await onLoggedIn()
     } catch (err) {
-      setError(err.status === 401 ? t('login.error') : t('error.generic'))
+      // 503 = server misconfigured; show the server's message so it can be fixed
+      setError(err.status === 401 ? t('login.error') : err.status === 503 ? err.message : t('error.generic'))
     } finally {
       setBusy(false)
     }
