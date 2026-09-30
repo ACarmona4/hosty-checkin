@@ -5,8 +5,11 @@ from pathlib import Path
 import psycopg
 from psycopg.rows import dict_row
 
-DATABASE_URL = os.environ.get(
-    "PLATHOST_DATABASE_URL", "postgresql://plathost:plathost@localhost:5433/plathost"
+# PLATHOST_DATABASE_URL wins; DATABASE_URL is what the Neon integration on Vercel injects.
+DATABASE_URL = (
+    os.environ.get("PLATHOST_DATABASE_URL")
+    or os.environ.get("DATABASE_URL")
+    or "postgresql://plathost:plathost@localhost:5433/plathost"
 )
 UPLOADS_DIR = Path(os.environ.get("PLATHOST_UPLOADS_DIR", Path(__file__).resolve().parent.parent / "data" / "uploads"))
 
@@ -57,7 +60,6 @@ SEED = [
 
 
 def init_db() -> None:
-    UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
     with connect() as conn:
         conn.execute(SCHEMA)
         for r in SEED:

@@ -31,16 +31,36 @@ El apellido no distingue mayúsculas ni tildes. Para volver a probar desde cero:
 
 Pruebas: `cd backend && .venv/bin/python -m pytest` (usa la base `plathost_test`).
 
-Producción: `npm run build` en `frontend/`; la API sirve `frontend/dist` en el mismo origen.
+Producción fuera de Vercel: `npm run build` en `frontend/`; la API sirve `frontend/dist` en el mismo origen.
+
+## Despliegue en Vercel
+
+El proyecto usa [Vercel Services](https://vercel.com/docs/services) (`vercel.json`): un solo proyecto con dos servicios en el mismo dominio.
+
+| Servicio | Carpeta | Público en | Qué es |
+|---|---|---|---|
+| `backend` | `backend/` | `/api/*` | FastAPI (`app.main:app`), una Vercel Function en Python 3.12 |
+| `frontend` | `frontend/` | todo lo demás | Build estático de Vite |
+
+El frontend llama a la API con rutas relativas (`/api/...`) y el backend no llama a otros servicios, así que no hay *bindings*.
+
+1. **Postgres**: Storage → Create → **Neon**, y conéctalo al proyecto. La API usa `DATABASE_URL` (o `PLATHOST_DATABASE_URL` si la defines). Las tablas se crean solas al primer arranque.
+2. **Blob privado**: Storage → Create → **Blob** con acceso **Private** (no se puede cambiar después), y conéctalo al proyecto. Debe existir `BLOB_READ_WRITE_TOKEN` en las variables del proyecto; el SDK de Python lo usa para guardar fotos y firmas.
+3. **Importar**: Add New → Project → `hosty-checkin`. Root Directory `./`; Vercel detecta los servicios desde `vercel.json`.
+4. **Variables**: `PLATHOST_SECRET` (obligatoria; `openssl rand -hex 32`) y opcionalmente `PLATHOST_ADMIN_KEY`.
+5. **Deploy**. En despliegues (`production`/`preview`) la API se niega a arrancar si falta `PLATHOST_SECRET` o el Blob store, en lugar de fallar en silencio.
+
+Probar localmente como en Vercel: `npx vercel dev -L` (sirve todo en `http://localhost:3000`).
 
 ### Variables de entorno (backend)
 
 | Variable | Default | Uso |
 |---|---|---|
-| `PLATHOST_DATABASE_URL` | `postgresql://plathost:plathost@localhost:5433/plathost` | Conexión Postgres |
+| `PLATHOST_DATABASE_URL` / `DATABASE_URL` | `postgresql://plathost:plathost@localhost:5433/plathost` | Conexión Postgres (Neon en Vercel) |
 | `PLATHOST_SECRET` | `dev-secret-change-me` | Firma de los tokens de sesión — **cambiar en producción** |
 | `PLATHOST_ADMIN_KEY` | vacío (deshabilitado) | Header `X-Admin-Key` para `GET /api/admin/checkins` |
-| `PLATHOST_UPLOADS_DIR` | `backend/data/uploads` | Fotos de documentos y firmas |
+| `PLATHOST_UPLOADS_DIR` | `backend/data/uploads` | Fotos y firmas en local |
+| `BLOB_READ_WRITE_TOKEN` | — | Vercel Blob privado para fotos y firmas (obligatorio en Vercel) |
 
 ## Qué viene de la reserva y qué llena el huésped
 
@@ -89,6 +109,5 @@ Al elegir CC o TI la nacionalidad se fija en Colombia. Cada huésped debe subir 
 ## Pendiente para producción
 
 - Integrar la fuente real de reservas (PMS / channel manager) en lugar de `db.SEED`.
-- Almacenamiento de imágenes en un bucket privado en vez de disco local.
 - Panel de recepción (hoy solo existe `GET /api/admin/checkins`).
 - Límite de intentos en el login.

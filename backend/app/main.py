@@ -15,19 +15,23 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi.concurrency import run_in_threadpool
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from . import documents, mrz
+from . import documents, mrz, storage
 from psycopg.types.json import Jsonb
 
 from . import db
 from .db import connect, init_db
 
-SECRET = os.environ.get("PLATHOST_SECRET", "dev-secret-change-me").encode()
+_DEV_SECRET = "dev-secret-change-me"
+SECRET = os.environ.get("PLATHOST_SECRET", _DEV_SECRET).encode()
+if storage.ON_VERCEL and SECRET == _DEV_SECRET.encode():
+    raise RuntimeError("PLATHOST_SECRET no está configurado en Vercel.")
 ADMIN_KEY = os.environ.get("PLATHOST_ADMIN_KEY", "")
 TOKEN_TTL = 60 * 60 * 2  # 2 h
-MAX_IMAGE_BYTES = 8 * 1024 * 1024
+MAX_IMAGE_BYTES = 4 * 1024 * 1024  # Vercel Functions reject request bodies > 4.5 MB
 RULES = json.loads((Path(__file__).parent / "rules.json").read_text(encoding="utf-8"))
 
 @asynccontextmanager
@@ -233,10 +237,8 @@ def submit(body: SubmitIn, code: str = Depends(current_code)):
     for c in d.companions:
         c.doc_number = documents.normalize_number(c.doc_number)
     sig_bytes = base64.b64decode(body.signature.split(",", 1)[1])
-    sig_path = db.UPLOADS_DIR / code / "signature.png"
-    sig_path.parent.mkdir(parents=True, exist_ok=True)
-    sig_path.write_bytes(sig_bytes)
-    _save(code, d, status="submitted", signature=str(sig_path.relative_to(db.UPLOADS_DIR)))
+    sig_ref = storage.save(f"{code}/signature.png", sig_bytes, "image/png")
+    _save(code, d, status="submitted", signature=sig_ref)
     return {"ok": True}
 
 
@@ -294,15 +296,18 @@ async def verify_document(
         name_ref = reservation["last_name"] if guest_index == 0 else expected_name
         status, checks = _check_mrz(result, reservation, name_ref)
 
-    ext = "png" if content.startswith(b"\x89PNG") else "jpg"
-    rel = Path(code) / f"doc-{guest_index}-{doc_type}-{uuid.uuid4().hex[:8]}.{ext}"
-    (db.UPLOADS_DIR / rel).parent.mkdir(parents=True, exist_ok=True)
-    (db.UPLOADS_DIR / rel).write_bytes(content)
+    is_png = content.startswith(b"\x89PNG")
+    ref = await run_in_threadpool(
+        storage.save,
+        f"{code}/doc-{guest_index}-{doc_type}-{uuid.uuid4().hex[:8]}.{'png' if is_png else 'jpg'}",
+        content,
+        "image/png" if is_png else "image/jpeg",
+    )
     with connect() as conn:
         conn.execute(
             """INSERT INTO document_scans (code, guest_index, doc_type, image_path, result, status)
                VALUES (%s, %s, %s, %s, %s, %s)""",
-            (code, guest_index, doc_type, str(rel), Jsonb({"fields": fields, "checks": checks}), status),
+            (code, guest_index, doc_type, ref, Jsonb({"fields": fields, "checks": checks}), status),
         )
     return {"status": status, "fields": fields, "checks": checks}
 
@@ -331,5 +336,5 @@ def admin_list(x_admin_key: str = Header(default="")):
 
 # Serve the built frontend (npm run build) from the same origin in production.
 _dist = Path(__file__).resolve().parents[2] / "frontend" / "dist"
-if _dist.exists():
+if _dist.exists() and not storage.ON_VERCEL:
     app.mount("/", StaticFiles(directory=_dist, html=True), name="frontend")

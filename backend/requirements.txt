@@ -2,3 +2,4 @@ fastapi==0.142.2
 uvicorn[standard]==0.54.0
 python-multipart==0.0.32
 psycopg[binary]==3.3.6
+vercel==0.11.4
