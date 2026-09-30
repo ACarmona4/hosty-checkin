@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: plathost-db
+    environment:
+      POSTGRES_USER: plathost
+      POSTGRES_PASSWORD: plathost
+      POSTGRES_DB: plathost
+    ports:
+      - "5433:5432"   # 5432 is taken by a local Postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/db/init-test-db.sql:/docker-entrypoint-initdb.d/10-test-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U plathost"]
+      interval: 3s
+      retries: 10
+
+volumes:
+  pgdata:

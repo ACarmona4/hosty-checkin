@@ -1,0 +1,198 @@
+{
+  "es": {
+    "label": "Español",
+    "sections": [
+      {
+        "title": "Normas de convivencia en el edificio",
+        "intro": "Bienvenido a Class Suites. Le pedimos leer y respetar las siguientes normas para garantizar una estadía agradable para todos.",
+        "items": [
+          "Todo visitante deberá registrarse en la portería del edificio presentando su documento de identidad o pasaporte ORIGINAL Y VIGENTE.",
+          "Con el fin de respetar el descanso de los demás residentes, no se permiten fiestas, reuniones ni eventos sociales en los apartamentos.",
+          "El consumo de sustancias ilegales está estrictamente prohibido en todas las instalaciones del edificio.",
+          "Queda expresamente prohibida la explotación sexual comercial de niños, niñas y adolescentes (ESCNNA), conforme a las Leyes 1336, 2068, 1996, 1558 y la Resolución 3840 de 2009.",
+          "Le solicitamos mantener un nivel de ruido moderado, especialmente en horario nocturno y durante los días de semana.",
+          "Las autoridades competentes están facultadas para retirar del establecimiento a cualquier huésped que incumpla las normas o los términos y condiciones de estadía en Class Suites, de conformidad con la Ley 1802 de 2016."
+        ]
+      },
+      {
+        "title": "Uso de la piscina",
+        "items": [
+          "Horario de atención: 10:00 a.m. – 10:00 p.m. Los días lunes la piscina permanece cerrada por mantenimiento; también los martes cuando el lunes haya sido festivo.",
+          "El ingreso está permitido únicamente en vestido de baño. No se admiten prendas de calle dentro del área de la piscina.",
+          "Por respeto a todos los usuarios, no se permite introducir alimentos, bebidas alcohólicas, botellas, latas ni recipientes de ningún tipo.",
+          "Si ha utilizado protector solar, le pedimos ducharse antes de ingresar al agua para preservar la calidad de la piscina.",
+          "Los menores de edad deberán estar siempre acompañados de un adulto responsable que sepa nadar.",
+          "Se prohíbe el uso de dispositivos electrónicos dentro del área de la piscina.",
+          "Está prohibido fumar en la piscina y en todas las zonas comunes del edificio.",
+          "Por razones de higiene, no se permite el ingreso de bebés con pañal.",
+          "El acceso a la piscina es exclusivamente por el lavapiés. Le pedimos usar la ducha antes de ingresar."
+        ]
+      },
+      {
+        "title": "Manejo de residuos y reciclaje",
+        "intro": "Para mantener el edificio limpio y en buen estado, le pedimos seguir estas indicaciones:",
+        "items": [
+          "Deposite los residuos en el ducto de basuras únicamente en bolsas pequeñas, bien amarradas y cerradas.",
+          "En el ducto solo deben ir: papel higiénico y restos de comida.",
+          "Por favor NO deposite en el ducto: botellas plásticas o de vidrio, cajas de cartón, cajas de pizza, madera, escombros ni latas. Estos materiales deben dejarse en bolsa cerrada detrás de las puertas de emergencia del piso correspondiente."
+        ]
+      }
+    ],
+    "notes": [
+      "El incumplimiento de cualquiera de estas normas dará lugar a una multa de USD $50 o su equivalente en pesos colombianos.",
+      "Todos los ascensores, puntos fijos y zonas comunes del edificio se encuentran monitoreados por circuito cerrado de televisión (CCTV) las 24 horas."
+    ],
+    "authorization": {
+      "title": "Autorización para el tratamiento de datos personales",
+      "text": "De conformidad con lo dispuesto en la Ley 1581 de 2012 y el Decreto 1074 de 2015, yo, como titular de la información, autorizo de manera libre, voluntaria e informada a ED. CLASS SUITE P.H. para recolectar, almacenar y tratar mis datos personales con fines de gestión comercial y prestación del servicio de alojamiento. Declaro conocer que puedo ejercer mis derechos de acceso, corrección, supresión y revocación enviando una solicitud al correo: classuitesrecepcion@gmail.com",
+      "acceptance": "Al firmar este documento, declaro que he leído, comprendido y acepto plenamente todas las normas, términos y condiciones de estadía en Class Suites. Entiendo que estas normas también me serán enviadas vía WhatsApp para mi consulta durante la estadía."
+    }
+  },
+  "en": {
+    "label": "English",
+    "sections": [
+      {
+        "title": "Building & house rules",
+        "intro": "Welcome to Class Suites. We kindly ask you to read and respect the following guidelines to ensure a pleasant stay for everyone.",
+        "items": [
+          "All visitors are required to register at the building entrance by presenting a valid, ORIGINAL ID or passport.",
+          "Out of respect for other residents, parties, social gatherings, and events of any kind are not permitted in the apartments.",
+          "The use or possession of illegal substances is strictly prohibited anywhere on the building premises.",
+          "The commercial sexual exploitation of children and adolescents (CSEC) is strictly prohibited in accordance with applicable Colombian law.",
+          "We kindly ask guests to maintain a moderate noise level, especially during evening hours and on weekdays.",
+          "Authorities are authorized to remove any guest who fails to comply with Class Suites house rules or terms of stay, in accordance with Law 1802 of 2016."
+        ]
+      },
+      {
+        "title": "Swimming pool",
+        "items": [
+          "Pool hours: 10:00 AM – 10:00 PM. The pool is closed every Monday for maintenance, and also on Tuesdays following a public holiday on Monday.",
+          "Access is permitted in proper swimwear only. Street clothing is not allowed in the pool area.",
+          "Out of consideration for all guests, food, alcoholic beverages, bottles, cans, and containers of any kind are not permitted in the pool area.",
+          "If you have applied sunscreen or body lotion, please shower before entering the pool to help maintain water quality.",
+          "Minors must be accompanied at all times by a responsible adult who is able to swim.",
+          "The use of electronic devices inside the pool area is not permitted.",
+          "Smoking is strictly prohibited in the pool area and all common areas of the building.",
+          "For hygiene reasons, infants wearing diapers are not allowed in the pool.",
+          "Pool access is through the foot wash station only. Please use the shower before entering."
+        ]
+      },
+      {
+        "title": "Waste disposal & recycling",
+        "intro": "To keep the building clean and well-maintained, we ask that you follow these simple guidelines:",
+        "items": [
+          "Please dispose of trash in the waste chute using small, tightly sealed bags only.",
+          "Only toilet paper and food scraps may be placed in the chute.",
+          "Please do NOT put the following in the chute: plastic or glass bottles, cardboard boxes, pizza boxes, wood, rubble, or cans. These items must be placed in a closed bag behind the emergency doors on your floor."
+        ]
+      }
+    ],
+    "notes": [
+      "Non-compliance with any of these rules will result in a fine of USD $50 or its equivalent in Colombian pesos.",
+      "All elevators, stairwells, and common areas of the building are monitored 24 hours a day by closed-circuit television (CCTV)."
+    ],
+    "authorization": {
+      "title": "Personal data processing authorization",
+      "text": "In accordance with Law 1581 of 2012 and Decree 1074 of 2015, I, as the data subject, freely and voluntarily authorize ED. CLASS SUITE P.H. to collect, store, and process my personal data for the purposes of commercial management and accommodation services. I acknowledge that I may exercise my rights of access, correction, deletion, and revocation by submitting a request to: classuitesrecepcion@gmail.com",
+      "acceptance": "By signing this document, I confirm that I have read, understood, and fully accept all the rules, terms, and conditions of stay at Class Suites. I understand that these rules will also be sent to me via WhatsApp for reference during my stay."
+    }
+  },
+  "fr": {
+    "label": "Français",
+    "sections": [
+      {
+        "title": "Règlement intérieur de l'immeuble",
+        "intro": "Bienvenue à Class Suites. Nous vous remercions de prendre connaissance des règles ci-dessous afin de garantir un séjour agréable pour tous.",
+        "items": [
+          "Tout visiteur est tenu de s'enregistrer à l'accueil de l'immeuble en présentant une pièce d'identité ou un passeport ORIGINAL ET EN COURS DE VALIDITÉ.",
+          "Par respect pour les autres résidents, toute fête, réunion ou événement social est interdit dans les appartements.",
+          "La consommation ou la détention de substances illicites est strictement interdite dans toutes les installations de l'immeuble.",
+          "L'exploitation sexuelle commerciale des enfants et des adolescents est formellement interdite, conformément à la législation colombienne en vigueur.",
+          "Nous vous prions de maintenir un niveau sonore raisonnable, notamment en soirée et en semaine.",
+          "Les autorités compétentes sont habilitées à expulser tout client ne respectant pas le règlement ou les conditions de séjour de Class Suites, conformément à la Loi 1802 de 2016."
+        ]
+      },
+      {
+        "title": "Piscine",
+        "items": [
+          "Horaires d'ouverture : 10h00 – 22h00. La piscine est fermée chaque lundi pour entretien, ainsi que le mardi lorsque le lundi est un jour férié.",
+          "L'accès à la piscine est autorisé en tenue de bain uniquement. Les vêtements de ville ne sont pas admis dans l'espace piscine.",
+          "Par considération pour tous les baigneurs, il est interdit d'introduire des aliments, des boissons alcoolisées, des bouteilles, des canettes ou tout autre récipient dans l'espace piscine.",
+          "Si vous avez utilisé de la crème solaire ou du lait corporel, nous vous remercions de vous doucher avant d'entrer dans l'eau afin de préserver la qualité de l'eau.",
+          "Les enfants mineurs doivent être accompagnés en permanence d'un adulte responsable capable de nager.",
+          "L'utilisation d'appareils électroniques dans l'espace piscine n'est pas autorisée.",
+          "Il est strictement interdit de fumer dans la piscine et dans l'ensemble des espaces communs de l'immeuble.",
+          "Pour des raisons d'hygiène, les nourrissons portant des couches ne sont pas admis dans la piscine.",
+          "L'accès à la piscine se fait uniquement par le bain de pieds. Veuillez utiliser la douche avant d'entrer."
+        ]
+      },
+      {
+        "title": "Gestion des déchets et tri sélectif",
+        "intro": "Afin de maintenir l'immeuble propre et en bon état, nous vous demandons de suivre ces consignes simples :",
+        "items": [
+          "Veuillez déposer vos déchets dans la goulotte uniquement dans de petits sacs bien fermés et noués.",
+          "Seuls le papier toilette et les restes alimentaires peuvent être mis dans la goulotte.",
+          "Merci de ne PAS jeter dans la goulotte : bouteilles en plastique ou en verre, cartons, boîtes à pizza, bois, gravats ou canettes. Ces éléments doivent être déposés dans un sac fermé derrière les portes de secours de votre étage."
+        ]
+      }
+    ],
+    "notes": [
+      "Tout manquement à ces règles entraînera une amende de 50 USD ou son équivalent en pesos colombiens.",
+      "L'ensemble des ascenseurs, cages d'escalier et espaces communs de l'immeuble est surveillé 24h/24 par un système de vidéosurveillance (CCTV)."
+    ],
+    "authorization": {
+      "title": "Autorisation de traitement des données personnelles",
+      "text": "Conformément aux dispositions de la Loi 1581 de 2012 et du Décret 1074 de 2015, je soussigné(e), en tant que titulaire des données, autorise librement et volontairement ED. CLASS SUITE P.H. à collecter, stocker et traiter mes données personnelles aux fins de gestion commerciale et de prestation de services d'hébergement. Je reconnais pouvoir exercer mes droits d'accès, de rectification, de suppression et de révocation en adressant une demande à : classuitesrecepcion@gmail.com",
+      "acceptance": "En signant ce document, je confirme avoir lu, compris et accepté pleinement l'ensemble des règles, termes et conditions de séjour à Class Suites. Je comprends que ces règles me seront également transmises par WhatsApp pour consultation pendant mon séjour."
+    }
+  },
+  "de": {
+    "label": "Deutsch",
+    "sections": [
+      {
+        "title": "Hausordnung",
+        "intro": "Herzlich willkommen bei Class Suites. Wir bitten Sie, die folgenden Regeln zu lesen und einzuhalten, damit sich alle Gäste wohlfühlen.",
+        "items": [
+          "Alle Besucher sind verpflichtet, sich am Eingang des Gebäudes mit einem gültigen, ORIGINALEN Ausweis oder Reisepass anzumelden.",
+          "Aus Rücksicht auf die anderen Bewohner sind Partys, gesellschaftliche Zusammenkünfte und Veranstaltungen jeglicher Art in den Wohnungen nicht gestattet.",
+          "Der Konsum oder Besitz illegaler Substanzen ist in den gesamten Gebäuderäumen streng verboten.",
+          "Die kommerzielle sexuelle Ausbeutung von Kindern und Jugendlichen ist gemäß dem geltenden kolumbianischen Recht ausdrücklich verboten.",
+          "Wir bitten unsere Gäste, insbesondere in den Abendstunden und an Wochentagen auf einen angemessenen Geräuschpegel zu achten.",
+          "Die zuständigen Behörden sind befugt, Gäste, die gegen die Hausordnung oder die Aufenthaltsbedingungen von Class Suites verstoßen, des Gebäudes zu verweisen, gemäß Gesetz 1802 von 2016."
+        ]
+      },
+      {
+        "title": "Schwimmbad",
+        "items": [
+          "Öffnungszeiten: 10:00 – 22:00 Uhr. Das Schwimmbad ist jeden Montag wegen Reinigung und Wartung geschlossen; ebenso am Dienstag, wenn der Montag ein Feiertag war.",
+          "Der Zugang ist ausschließlich in Badebekleidung gestattet. Straßenkleidung ist im Poolbereich nicht erlaubt.",
+          "Aus Rücksicht auf alle Badegäste sind Speisen, alkoholische Getränke, Flaschen, Dosen und Behälter jeglicher Art im Poolbereich nicht erlaubt.",
+          "Falls Sie Sonnencreme oder Körperlotion verwendet haben, bitten wir Sie, vor dem Betreten des Pools zu duschen, um die Wasserqualität zu erhalten.",
+          "Minderjährige müssen jederzeit von einem verantwortlichen Erwachsenen begleitet werden, der schwimmen kann.",
+          "Die Nutzung elektronischer Geräte im Poolbereich ist nicht gestattet.",
+          "Das Rauchen ist im Poolbereich sowie in allen Gemeinschaftsbereichen des Gebäudes streng verboten.",
+          "Aus hygienischen Gründen ist Kleinkindern mit Windeln der Zutritt zum Pool nicht gestattet.",
+          "Der Zugang zum Pool erfolgt ausschließlich über die Fußwaschstation. Bitte benutzen Sie die Dusche vor dem Betreten."
+        ]
+      },
+      {
+        "title": "Abfallentsorgung und Mülltrennung",
+        "intro": "Um das Gebäude sauber und gepflegt zu halten, bitten wir Sie, folgende einfache Hinweise zu beachten:",
+        "items": [
+          "Bitte werfen Sie Ihren Müll ausschließlich in kleinen, fest verschlossenen und zugebundenen Beuteln in den Müllschlucker.",
+          "In den Müllschlucker gehören ausschließlich: Toilettenpapier und Lebensmittelreste.",
+          "Bitte werfen Sie NICHT in den Müllschlucker: Plastik- oder Glasflaschen, Kartons, Pizzakartons, Holz, Bauschutt oder Dosen. Diese Gegenstände müssen in einem verschlossenen Beutel hinter den Nottüren Ihres Stockwerks abgestellt werden."
+        ]
+      }
+    ],
+    "notes": [
+      "Bei Nichteinhaltung dieser Regeln wird eine Geldstrafe von USD $50 oder dem entsprechenden Betrag in kolumbianischen Pesos erhoben.",
+      "Alle Aufzüge, Treppenhäuser und Gemeinschaftsbereiche des Gebäudes werden rund um die Uhr durch ein Videoüberwachungssystem (CCTV) überwacht."
+    ],
+    "authorization": {
+      "title": "Einwilligung zur Verarbeitung personenbezogener Daten",
+      "text": "Gemäß den Bestimmungen des Gesetzes 1581 von 2012 und des Dekrets 1074 von 2015 erteile ich, als betroffene Person, hiermit freiwillig und ausdrücklich meine Einwilligung, dass ED. CLASS SUITE P.H. meine personenbezogenen Daten zum Zweck der kaufmännischen Verwaltung und der Erbringung von Unterkunftsleistungen erheben, speichern und verarbeiten darf. Ich nehme zur Kenntnis, dass ich meine Rechte auf Auskunft, Berichtigung, Löschung und Widerruf durch eine Anfrage an folgende E-Mail-Adresse ausüben kann: classuitesrecepcion@gmail.com",
+      "acceptance": "Mit meiner Unterschrift bestätige ich, dass ich alle Regeln, Bedingungen und Aufenthaltsbedingungen von Class Suites gelesen, verstanden und vollständig akzeptiert habe. Ich bin damit einverstanden, dass mir diese Regeln zur Erinnerung auch per WhatsApp während meines Aufenthalts zugesandt werden."
+    }
+  }
+}
