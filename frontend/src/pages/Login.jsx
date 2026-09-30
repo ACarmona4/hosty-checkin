@@ -20,7 +20,7 @@ export default function Login({ onLoggedIn }) {
       setToken(token)
       await onLoggedIn()
     } catch (err) {
-      // 503 = server misconfigured; show the server's message so it can be fixed
+      // 503 = the API can't reach the database; show the server's message
       setError(err.status === 401 ? t('login.error') : err.status === 503 ? err.message : t('error.generic'))
     } finally {
       setBusy(false)

@@ -194,17 +194,5 @@ def test_draft_and_submit(client):
 
 
 def test_health_local(client):
-    assert client.get("/api/health").json() == {
-        "ok": True, "environment": "local", "missing": [], "database": "ok", "storage": "local"}
+    assert client.get("/api/health").json() == {"ok": True, "database": "ok"}
 
-
-def test_incomplete_vercel_config_returns_503(client, monkeypatch):
-    from app import storage
-    for v in ("BLOB_READ_WRITE_TOKEN", "VERCEL_BLOB_READ_WRITE_TOKEN", "PLATHOST_DATABASE_URL", "DATABASE_URL", "POSTGRES_URL"):
-        monkeypatch.delenv(v, raising=False)
-    monkeypatch.setattr(storage, "ON_VERCEL", True)
-    monkeypatch.setattr(main, "SECRET", main._DEV_SECRET.encode())
-    h = client.get("/api/health").json()
-    assert h["ok"] is False and h["missing"] == ["PLATHOST_SECRET", "DATABASE_URL", "BLOB_READ_WRITE_TOKEN"]
-    r = login(client)
-    assert r.status_code == 503 and "PLATHOST_SECRET" in r.json()["detail"]

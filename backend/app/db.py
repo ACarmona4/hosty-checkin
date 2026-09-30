@@ -5,15 +5,9 @@ from pathlib import Path
 import psycopg
 from psycopg.rows import dict_row
 
-# PLATHOST_DATABASE_URL wins; DATABASE_URL / POSTGRES_URL are what the Neon integration on Vercel injects.
-_URL_VARS = ("PLATHOST_DATABASE_URL", "DATABASE_URL", "POSTGRES_URL")
-
-
-def configured_url() -> str | None:
-    return next((os.environ[v] for v in _URL_VARS if os.environ.get(v)), None)
-
-
-DATABASE_URL = configured_url() or "postgresql://plathost:plathost@localhost:5433/plathost"
+DATABASE_URL = os.environ.get(
+    "PLATHOST_DATABASE_URL", "postgresql://plathost:plathost@localhost:5433/plathost"
+)
 UPLOADS_DIR = Path(os.environ.get("PLATHOST_UPLOADS_DIR", Path(__file__).resolve().parent.parent / "data" / "uploads"))
 
 SCHEMA = """

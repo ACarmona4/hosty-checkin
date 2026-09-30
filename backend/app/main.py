@@ -30,7 +30,7 @@ _DEV_SECRET = "dev-secret-change-me"
 SECRET = os.environ.get("PLATHOST_SECRET", _DEV_SECRET).encode()
 ADMIN_KEY = os.environ.get("PLATHOST_ADMIN_KEY", "")
 TOKEN_TTL = 60 * 60 * 2  # 2 h
-MAX_IMAGE_BYTES = 4 * 1024 * 1024  # Vercel Functions reject request bodies > 4.5 MB
+MAX_IMAGE_BYTES = 8 * 1024 * 1024
 RULES = json.loads((Path(__file__).parent / "rules.json").read_text(encoding="utf-8"))
 
 _db_ready = False
@@ -50,24 +50,9 @@ def ensure_db() -> None:
         print(f"[plathost] database init failed: {e!r}")
 
 
-def missing_config() -> list[str]:
-    """Deployment settings that are required on Vercel but not set (names only, never values)."""
-    if not storage.ON_VERCEL:
-        return []
-    missing = []
-    if SECRET == _DEV_SECRET.encode():
-        missing.append("PLATHOST_SECRET")
-    if not db.configured_url():
-        missing.append("DATABASE_URL")
-    if storage.backend_or_none() is None:
-        missing.append("BLOB_READ_WRITE_TOKEN")
-    return missing
-
-
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    if not missing_config():
-        await run_in_threadpool(ensure_db)
+    await run_in_threadpool(ensure_db)
     yield
 
 
@@ -75,11 +60,8 @@ app = FastAPI(title="PlatHost API", lifespan=lifespan)
 
 
 @app.middleware("http")
-async def require_config(request: Request, call_next):
+async def require_database(request: Request, call_next):
     if request.url.path.startswith("/api/") and request.url.path != "/api/health":
-        missing = missing_config()
-        if missing:
-            return JSONResponse({"detail": f"Configuración incompleta en el servidor: falta {', '.join(missing)}."}, 503)
         await run_in_threadpool(ensure_db)
         if not _db_ready:
             return JSONResponse({"detail": "No se pudo conectar a la base de datos."}, 503)
@@ -88,16 +70,8 @@ async def require_config(request: Request, call_next):
 
 @app.get("/api/health")
 def health():
-    missing = missing_config()
-    if not missing:
-        ensure_db()
-    return {
-        "ok": not missing and _db_ready,
-        "environment": os.environ.get("VERCEL_ENV", "local"),
-        "missing": missing,
-        "database": "ok" if _db_ready else (_db_error or "not checked"),
-        "storage": storage.backend_or_none(),
-    }
+    ensure_db()
+    return {"ok": _db_ready, "database": "ok" if _db_ready else _db_error}
 
 
 # ---------------------------------------------------------------- helpers
@@ -393,5 +367,5 @@ def admin_list(x_admin_key: str = Header(default="")):
 
 # Serve the built frontend (npm run build) from the same origin in production.
 _dist = Path(__file__).resolve().parents[2] / "frontend" / "dist"
-if _dist.exists() and not storage.ON_VERCEL:
+if _dist.exists():
     app.mount("/", StaticFiles(directory=_dist, html=True), name="frontend")
